@@ -25,8 +25,8 @@ exports.getTask = async (req, res) => {
 
 exports.postTask = async (req, res) => {
   try {
-    const { description, title } = req.body;
-    
+    const { description, title, completed } = req.body;
+
     if (!description) {
       return res.status(400).json({ status: false, msg: "Description of task not found" });
     }
@@ -34,8 +34,7 @@ exports.postTask = async (req, res) => {
       return res.status(400).json({ status: false, msg: "Title of task not found" });
     }
 
-    // Create task, setting completed to default (false) and createdAt to the current time automatically
-    const task = await Task.create({ title, description });
+    const task = await Task.create({ title, description, completed });
     res.status(200).json({ task, status: true, msg: "Task created successfully.." });
   } catch (err) {
     console.error(err);
